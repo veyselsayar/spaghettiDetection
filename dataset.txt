@@ -1,0 +1,10 @@
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/0m852sjm9a371_jpg.rf.dcc1de456754a1522cf8325b8514dc64.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/2-8267846360_9a97ae0e3a_k_jpg.rf.183806f70d6d09a30b515c22cd99d37e.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/3xmm4jtk93q61_jpg.rf.9e35f2c69dd97539cdef8ebd942fa2fb.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/12-ek6cag1xkaan18w_jpg.rf.63f5fe869d4bc8557225cfd73613a412.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/18-8136822496_3134392b22_z_medium_jpg.rf.927b5d956f893084e826925a2d9ca9ee.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/28-a84378fdda9ddd47f21daf1978cd9c50_png.rf.f5009430e3d519de25d8692e572d063d.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/39-1e0889f0d3cb71fe1a1dc15a23bcda8cf78d4241_jpg.rf.c7e69e2b948ba47084a7f65c54c5857d.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/47-70er8je2dviy_jpg.rf.380958e60d479f846d61e425205054c5.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/48-supportfailure_jpg.rf.9bef8377c434677ee0cd1bfcf0451bf7.jpg
+/Users/veysel/Desktop/spaghettiDetection/dataset/valid/images/64-maxresdefault_jpg.rf.ca2a1fa2c4d043d35a2fc18d93a7aa72.jpg
