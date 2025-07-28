@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 
 # Eğitilmiş modelin yolunu belirt
-model_path = 'results/spaghetti_v82/weights/best.pt'
+model_path = 'results/spaghetti_v8Latest/weights/best.pt'
 
 # Modeli yükle
 model = YOLO(model_path)
