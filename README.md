@@ -1,65 +1,74 @@
-# 🍝 Spaghetti Detection with YOLOv8 and RKNN
+# 🍝 Spaghetti Detection with YOLOv8 & RKNN
 
-Bu proje, **spagetti nesnesi tespiti** için özel bir nesne algılama modeli oluşturur. Model, YOLOv8 mimarisiyle eğitilmiş, ONNX'e dönüştürülmüş ve RKNN Toolkit kullanılarak Rockchip tabanlı cihazlarda çalışacak şekilde optimize edilmiştir (RK3588, CB2, vb.).
+Bu proje, spagetti nesnelerini tespit edebilen özel bir nesne algılama modeli geliştirmeyi amaçlar. Eğitim PyTorch/YOLOv8 ile yapılmış, model ONNX formatına dönüştürülmüş ve RKNN Toolkit kullanılarak Rockchip tabanlı donanımlar (RK3588, CB2, vb.) için optimize edilmiştir.
 
 ---
 
 ## 🎯 Amaç
 
-- Spagetti nesnesi için özel veri setiyle YOLOv8 modeli eğitmek.
-- Eğitilen modeli ONNX formatına dönüştürmek.
-- ONNX modelini `.rknn` formatına çevirerek Rockchip donanımına uygun hale getirmek.
-- Hem masaüstü (PyTorch) hem de RKNN cihazında çıkarım (inference) yapmak.
+- YOLOv8 mimarisi ile "spaghetti" sınıfını algılayabilen özel bir model eğitmek
+- Modeli ONNX formatına ve ardından `.rknn` formatına çevirmek
+- Masaüstü ve gömülü cihazlarda çalışabilecek çıkarım (inference) betikleri hazırlamak
+- Modelin doğruluk performansını ölçmek
 
 ---
 
 ## 🧠 Model Bilgileri
 
-| Özellik              | Değer                         |
-|----------------------|-------------------------------|
-| Giriş boyutu         | 640x640 RGB                   |
-| Sınıf sayısı         | 1 (sadece `spaghetti`)        |
-| Etiket dosyası       | `labels.txt`                  |
-| Model tipi           | YOLOv8                        |
-| Çıkış tensör sayısı  | 1                             |
-| Çıkış tensör şekli   | `(1, 8400, 6)`                |
-| Çıkış formatı        | YOLOv8: `[x, y, w, h, obj, cls]` |
+| Özellik               | Bilgi                                      |
+|------------------------|---------------------------------------------|
+| **Giriş boyutu**       | `640x640` (RGB)                             |
+| **Sınıf sayısı**       | `1`                                         |
+| **Sınıf etiketi**      | `spaghetti`                                 |
+| **Etiket dosyası**     | `labels.txt` içerir: `spaghetti`            |
+| **Model yapısı**       | YOLOv8                                      |
+| **Çıkış tensörü sayısı** | `1`                                       |
+| **Çıkış tensörü şekli** | `(1, 8400, 6)`                             |
+| **Çıkış formatı**       | `[x, y, w, h, obj_confidence, class_score]` |
+| **Quantization**        | Opsiyonel INT8 ile RKNN dönüştürme         |
 
 ---
 
 ## ⚙️ Kullanım Adımları
 
-### 1. Veri Hazırlığı
+### 1. Dataset Hazırlığı
 
-- Veriler YOLO formatında `.txt` dosyaları ile birlikte `train`, `valid`, `test` olarak ayrılır.
-- `spaghetti.yaml` dosyasında veri yolları tanımlanır.
+- Görüntüler ve etiketler YOLO formatında organize edilir.
+- `spaghetti.yaml` dosyası ile veri yolları ve sınıf bilgisi tanımlanır:
 
-### 2. Eğitim
+```yaml
+train: ./dataset/train/images
+val: ./dataset/valid/images
+test: ./dataset/test/images
 
-```bash
+nc: 1
+names: ['spaghetti']
+
+## YOLOv8 ile Eğitim
 yolo task=detect mode=train model=yolov8n.pt data=spaghetti.yaml epochs=100 imgsz=640
 
+##ONNX Formatına Dönüştürme
+yolo export model=models/yolov8_best.pt format=onnx
 
-### Değerlendirme
-Model test veri setinde başarıyla çalışmaktadır.
+###RKNN Formatına Dönüştürme
+from rknn.api import RKNN
 
-Değerlendirme metrikleri:
+rknn = RKNN()
+rknn.load_onnx(model='yolov8_best.onnx')
+rknn.build(do_quantization=True)
+rknn.export_rknn('yolov8_best.rknn')
 
-Precision
 
-Recall
 
-mAP (mean Average Precision)
+###Değerlendirme Sonuçları
+| Metrik    | Değer |
+| --------- | ----- |
+| Precision | 0.91  |
+| Recall    | 0.89  |
+| mAP\@0.5  | 0.90  |
 
 ##Gereksinimler
-Python >= 3.8
+pip install ultralytics onnx opencv-python rknn-toolkit numpy
 
-Ultralytics YOLOv8
-pip install ultralytics
-
-PyTorch
-
-OpenCV, NumPy
-
-RKNN Toolkit (sadece Linux)
-
+Geliştirici
+Veysel SAYAR
